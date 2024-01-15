@@ -1,6 +1,12 @@
 // 예제 1 : 주어진 배열에서 최댓값을 찾아 반환하는 함수를 작성하세요.
 function findMax(arr) {
-
+  let maxNum = 0;
+  for(let i = 0; i<arr.length; i++){
+    // console.log(i, arr[i], arr[i-1])
+    maxNum = Math.max(arr[i], maxNum);
+    // console.log('maxNum', maxNum)
+  }
+  return maxNum;
 }
 
 // 테스트
@@ -8,11 +14,15 @@ const numbers = [3, 8, 2, 1, 5, 7, 4];
 const maxNumber = findMax(numbers);
 console.log("배열의 최댓값:", maxNumber);
 
-//////////////////////////////////////////////////////////////////////
+/////
 
 // 예제 2 : 주어진 배열의 모든 요소의 평균을 계산하여 반환하는 함수를 작성하세요.
 function calculateAverage(arr) {
-
+  let result = 0;
+  for(let i = 0; i<arr.length; i++){
+    result += arr[i];    
+  }
+  return result / arr.length;
 }
 
 // 테스트
@@ -24,7 +34,13 @@ console.log("배열 요소의 평균:", averageScore);
 
 // 예제 3 : 주어진 배열의 순서를 거꾸로 뒤집는 함수를 작성하세요.
 function reverseArray(arr) {
-
+  let reverse = [];
+  console.log(arr.length)
+  for(let i=0; i<arr.length; arr++){
+    reverse.push(arr[i])
+    console.log(reverse)
+  }
+  return reverse;
 }
 
 // 테스트
