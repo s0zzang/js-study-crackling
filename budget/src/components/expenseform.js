@@ -3,19 +3,25 @@ import { useState } from "react";
 import "./expenseform.css";
 import { MdSend } from "react-icons/md";
 
-export default function ExpenseForm({ expense, changeExpenses }) {
-  const [charge, setCharge] = useState("");
-  const [amount, setAmount] = useState();
-  const id = expense.length;
+export default function ExpenseForm({
+  expense,
+  changeExpenses,
+  modifyExpense,
+}) {
+  const [newItem, setNewItem] = useState({ charge: "", amount: "" });
+  const id = expense[expense.length - 1]?.id;
+  const handleChange = (e) => {
+    setNewItem({ ...newItem, [e.target.id]: e.target.value });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    changeExpenses({ id: id + 1, charge: charge, amount: +amount });
-    setCharge("");
-    setAmount("");
+    changeExpenses({ id: id + 1, ...newItem });
+    setNewItem({ charge: "", amount: "" });
   };
+  console.log(modifyExpense);
 
   return (
-    <form>
+    <form className="form-wr">
       <div className="form-center">
         <div className="form-group">
           <label htmlFor="charge">지출항목</label>
@@ -25,8 +31,9 @@ export default function ExpenseForm({ expense, changeExpenses }) {
             id="charge"
             name="charge"
             placeholder="예)렌트비"
-            value={charge}
-            onChange={(e) => setCharge(e.target.value)}
+            value={newItem.charge}
+            onChange={(e) => handleChange(e)}
+            autoFocus
           />
         </div>
 
@@ -38,8 +45,8 @@ export default function ExpenseForm({ expense, changeExpenses }) {
             id="amount"
             name="amount"
             placeholder="예)100"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            value={newItem.amount}
+            onChange={(e) => handleChange(e)}
           />
         </div>
 
