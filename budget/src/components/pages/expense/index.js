@@ -16,12 +16,11 @@ const ExpensePage = () => {
 
   const [newItem, setNewItem] = useState({ id: null, charge: "", amount: "" });
   const handleModify = (id) => {
-    const { 0: selectedItem } = expenses.filter((item) => id === item.id);
-    setNewItem({
-      id: id,
-      charge: selectedItem.charge,
-      amount: selectedItem.amount,
-    });
+    const {
+      0: { charge, amount },
+    } = expenses.filter((item) => id === item.id);
+    const idx = expenses.findIndex((item) => id === item.id);
+    setNewItem({ id, idx, charge, amount });
   };
 
   return (

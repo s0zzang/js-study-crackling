@@ -13,16 +13,16 @@ export default function ExpenseForm({
     setNewItem({ ...newItem, [e.target.id]: e.target.value });
 
   const handleSubmit = (e) => {
-    const { id, charge, amount } = newItem;
+    const { id, idx, charge, amount } = newItem;
     e.preventDefault();
 
     if (!charge.trim() || !amount) return alert("값을 입력해주세요.");
     if (id) {
       const newExpense = expense.filter((item) => item.id !== id);
-      newExpense.splice(id - 1, 0, { id, charge, amount });
+      newExpense.splice(idx, 0, { id, charge, amount });
       modifyExpenses(newExpense);
     } else {
-      const id = expense[expense.length - 1]?.id + 1;
+      const id = expense[expense.length - 1]?.id + 1 || 1;
       changeExpenses({ ...newItem, id });
     }
 
