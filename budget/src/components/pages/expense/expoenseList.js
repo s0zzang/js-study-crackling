@@ -3,16 +3,7 @@ import "./expenseList.css";
 import { MdDelete } from "react-icons/md";
 import ExpenseItem from "./expenseItem";
 
-export default function ExpoenseList({
-  expense,
-  deleteExpense,
-  modifyExpense,
-}) {
-  const handleModify = (id, cahrge, amount) => {
-    console.log(id, cahrge, amount);
-    // const newExpense = expense.filter((item) => item.id != id);
-    // deleteExpense(newExpense);
-  };
+export default function ExpoenseList({ expense, deleteExpense, handleModify }) {
   const handleDelete = (id) => {
     const newExpense = expense.filter((item) => item.id != id);
     deleteExpense(newExpense);
@@ -24,7 +15,7 @@ export default function ExpoenseList({
       charge={charge}
       amount={amount}
       handleDelete={handleDelete}
-      modifyExpense={modifyExpense}
+      handleModify={handleModify}
     />
   ));
   return (

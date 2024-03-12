@@ -1,24 +1,33 @@
 /* eslint-disable  */
-import { useState } from "react";
-import "./expenseform.css";
 import { MdSend } from "react-icons/md";
+import "./expenseform.css";
 
 export default function ExpenseForm({
   expense,
   changeExpenses,
-  modifyExpense,
+  modifyExpenses,
+  newItem,
+  setNewItem,
 }) {
-  const [newItem, setNewItem] = useState({ charge: "", amount: "" });
-  const id = expense[expense.length - 1]?.id;
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setNewItem({ ...newItem, [e.target.id]: e.target.value });
-  };
+
   const handleSubmit = (e) => {
+    const { id, charge, amount } = newItem;
     e.preventDefault();
-    changeExpenses({ id: id + 1, ...newItem });
+
+    if (!charge.trim() || !amount) return alert("값을 입력해주세요.");
+    if (id) {
+      const newExpense = expense.filter((item) => item.id !== id);
+      newExpense.splice(id - 1, 0, { id, charge, amount });
+      modifyExpenses(newExpense);
+    } else {
+      const id = expense[expense.length - 1]?.id + 1;
+      changeExpenses({ ...newItem, id });
+    }
+
     setNewItem({ charge: "", amount: "" });
   };
-  console.log(modifyExpense);
 
   return (
     <form className="form-wr">

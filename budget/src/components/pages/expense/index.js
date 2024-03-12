@@ -9,17 +9,20 @@ const ExpensePage = () => {
     { id: 2, charge: "교통비", amount: 400 },
     { id: 3, charge: "식비", amount: 1200 },
   ]);
-  const total = expenses.reduce((a, c) => a + +c.amount, 0);
   const changeExpenses = (item) => setExpenses([...expenses, item]);
+  const modifyExpenses = (item) => setExpenses(item);
   const deleteExpense = (item) => setExpenses(item);
-  const modifyExpense = (id, cahrge, amount) => {
-    // changeExpenses([...expenses])
-    console.log(id, cahrge, amount);
-    // const newExpense = expense.filter((item) => item.id != id);
-    // deleteExpense(newExpense);
+  const total = expenses.reduce((a, c) => a + +c.amount, 0);
+
+  const [newItem, setNewItem] = useState({ id: null, charge: "", amount: "" });
+  const handleModify = (id) => {
+    const { 0: selectedItem } = expenses.filter((item) => id === item.id);
+    setNewItem({
+      id: id,
+      charge: selectedItem.charge,
+      amount: selectedItem.amount,
+    });
   };
-  // setTotal(expenses.reduce((a, c) => a + c.amount, 0));
-  console.log(expenses);
 
   return (
     <main className="main-container">
@@ -27,12 +30,14 @@ const ExpensePage = () => {
       <Expenseform
         expense={expenses}
         changeExpenses={changeExpenses}
-        modifyExpens={modifyExpense}
+        modifyExpenses={modifyExpenses}
+        newItem={newItem}
+        setNewItem={setNewItem}
       />
       <ExpoenseList
         expense={expenses}
         deleteExpense={deleteExpense}
-        modifyExpense={modifyExpense}
+        handleModify={handleModify}
       />
       <div className="result-wr">
         <p>
