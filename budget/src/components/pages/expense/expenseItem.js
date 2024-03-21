@@ -1,6 +1,6 @@
 import { LiaEdit } from "react-icons/lia";
 import { MdDeleteForever } from "react-icons/md";
-import "./expenseitem.css";
+import "./ExpenseItem.css";
 
 export default function ExpenseItem({
   id,

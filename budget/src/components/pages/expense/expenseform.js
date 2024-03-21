@@ -1,19 +1,21 @@
 /* eslint-disable  */
 import { MdSend } from "react-icons/md";
-import "./expenseform.css";
+import "./ExpenseForm.css";
 
-export default function ExpenseForm({
+const ExpenseForm = ({
   expense,
   changeExpenses,
   modifyExpenses,
-  newItem,
-  setNewItem,
-}) {
-  const handleChange = (e) =>
-    setNewItem({ ...newItem, [e.target.id]: e.target.value });
+  inputs,
+  setInputs,
+}) => {
+  const handleChange = (e) => {
+    e.target.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    setInputs({ ...inputs, [e.target.id]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
-    const { id, idx, charge, amount } = newItem;
+    const { id, idx, charge, amount } = inputs;
     e.preventDefault();
 
     if (!charge.trim() || !amount) return alert("값을 입력해주세요.");
@@ -23,10 +25,10 @@ export default function ExpenseForm({
       modifyExpenses(newExpense);
     } else {
       const id = expense[expense.length - 1]?.id + 1 || 1;
-      changeExpenses({ ...newItem, id });
+      changeExpenses({ ...inputs, id });
     }
 
-    setNewItem({ charge: "", amount: "" });
+    setInputs({ charge: "", amount: "" });
   };
 
   return (
@@ -40,7 +42,7 @@ export default function ExpenseForm({
             id="charge"
             name="charge"
             placeholder="예)렌트비"
-            value={newItem.charge}
+            value={inputs.charge}
             onChange={(e) => handleChange(e)}
             autoFocus
           />
@@ -54,7 +56,7 @@ export default function ExpenseForm({
             id="amount"
             name="amount"
             placeholder="예)100"
-            value={newItem.amount}
+            value={inputs.amount}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -65,4 +67,6 @@ export default function ExpenseForm({
       </div>
     </form>
   );
-}
+};
+
+export default ExpenseForm;

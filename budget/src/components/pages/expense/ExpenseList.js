@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import "./expenseList.css";
+import { memo } from "react";
 import { MdDelete } from "react-icons/md";
-import ExpenseItem from "./expenseItem";
+import ExpenseItem from "./ExpenseItem";
+import "./ExpenseList.css";
 
-export default function ExpoenseList({ expense, deleteExpense, handleModify }) {
+const ExpenseList = memo(({ expense, deleteExpense, handleModify }) => {
   const handleDelete = (id) => {
     const newExpense = expense.filter((item) => item.id != id);
     deleteExpense(newExpense);
@@ -18,6 +18,7 @@ export default function ExpoenseList({ expense, deleteExpense, handleModify }) {
       handleModify={handleModify}
     />
   ));
+
   return (
     <div className="list-wr">
       <ul className="list">{li}</ul>
@@ -26,4 +27,6 @@ export default function ExpoenseList({ expense, deleteExpense, handleModify }) {
       </button>
     </div>
   );
-}
+});
+
+export default ExpenseList;

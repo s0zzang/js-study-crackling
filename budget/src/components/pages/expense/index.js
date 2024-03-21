@@ -1,7 +1,7 @@
+import { useCallback, useState } from "react";
+import ExpenseForm from "./ExpenseForm";
+import ExpenseList from "./ExpenseList";
 import "./index.css";
-import { useState } from "react";
-import Expenseform from "./expenseform";
-import ExpoenseList from "./expoenseList";
 
 const ExpensePage = () => {
   const [expenses, setExpenses] = useState([
@@ -9,31 +9,31 @@ const ExpensePage = () => {
     { id: 2, charge: "교통비", amount: 400 },
     { id: 3, charge: "식비", amount: 1200 },
   ]);
+  const [inputs, setInputs] = useState({ id: null, charge: "", amount: "" });
+
+  const total = expenses.reduce((a, c) => a + +c.amount, 0);
   const changeExpenses = (item) => setExpenses([...expenses, item]);
   const modifyExpenses = (item) => setExpenses(item);
-  const deleteExpense = (item) => setExpenses(item);
-  const total = expenses.reduce((a, c) => a + +c.amount, 0);
-
-  const [newItem, setNewItem] = useState({ id: null, charge: "", amount: "" });
-  const handleModify = (id) => {
+  const deleteExpense = useCallback((item) => setExpenses(item));
+  const handleModify = useCallback((id) => {
+    const idx = expenses.findIndex((item) => id === item.id);
     const {
       0: { charge, amount },
     } = expenses.filter((item) => id === item.id);
-    const idx = expenses.findIndex((item) => id === item.id);
-    setNewItem({ id, idx, charge, amount });
-  };
+    setInputs({ id, idx, charge, amount });
+  });
 
   return (
     <main className="main-container">
       <h1>내 소비목록 </h1>
-      <Expenseform
+      <ExpenseForm
         expense={expenses}
         changeExpenses={changeExpenses}
         modifyExpenses={modifyExpenses}
-        newItem={newItem}
-        setNewItem={setNewItem}
+        inputs={inputs}
+        setInputs={setInputs}
       />
-      <ExpoenseList
+      <ExpenseList
         expense={expenses}
         deleteExpense={deleteExpense}
         handleModify={handleModify}
